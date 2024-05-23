@@ -1,7 +1,11 @@
 {
   "$schema": "https://typedoc.org/schema.json",
+  "name": "Sample NPM Package",
+  // "cname": "sample-npm-package.js.org", // when custom domain used on Github pages
+  // "gaID": "Google-Analytics-ID",
   "entryPoints": ["src/**/*.ts"],
   "out": "sample-npm-package.github.io",
+  "logLevel": "Verbose",
   "exclude": ["**/*.test.ts"],
   "readme": "README.md",
   "includeVersion": true,
@@ -10,4 +14,11 @@
   "excludeExternals": true,
   "plugin": ["typedoc-material-theme"],
   "themeColor": "#87CEEB",
+  "navigationLinks": {
+    "GitHub": "https://github.com/Softysolutions/sample-npm-package"
+  },
+  "sidebarLinks": {
+    "GitHub": "https://github.com/Softysolutions/sample-npm-package"
+  },
+  // "searchInComments": true
 }
