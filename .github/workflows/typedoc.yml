@@ -32,7 +32,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       
       - name: Generate docs
-        run: pnpm run docs
+        run: npx typedoc
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
