@@ -1,11 +1,8 @@
 {
   "name": "rahuldhole-sample-npm-package",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Sample NPM Package",
   "main": "index.js",
-  "scripts": {
-    "test": "npm run test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Softysolutions/sample-npm-package.git"
