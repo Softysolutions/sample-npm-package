@@ -1,0 +1,59 @@
+{
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "source": {
+    "include": ["./src"],
+    "includePattern": ".+\\.ts$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "destination": "./sample-npm-package.github.io",
+    "recurse": true,
+    "verbose": true,
+    "tutorials": "./tutorials",
+    "template": "node_modules/docdash",
+    "navType": "vertical"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "docdash": {
+    "static": [true],
+    "sort": [true],
+    "sectionOrder": [
+         "Classes",
+         "Modules",
+         "Externals",
+         "Events",
+         "Namespaces",
+         "Mixins",
+         "Tutorials",
+         "Interfaces"
+    ],
+    "search": [true],
+    "commonNav": [true],
+    "collapse": [true],
+    "wrap": [true],
+    "typedefs": [true],
+    "navLevel": [-1],
+    "private": [true],
+    "scripts": [],
+    "ShortenTypes": [true],
+    "menu": {
+        "Github": {
+            "href":"https://github.com/Softysolutions/sample-npm-package",
+            "target":"_blank",
+            "class":"menu-item",
+            "id":"website_link"
+        }
+    },
+    "scopeInOutputPath": [true],
+    "nameInOutputPath": [true],
+    "versionInOutputPath": [true]
+  }
+}

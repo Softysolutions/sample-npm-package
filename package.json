@@ -1,8 +1,16 @@
 {
   "name": "rahuldhole-sample-npm-package",
+  "description": "rahuldhole-sample-npm-package",
   "version": "2.0.0",
-  "description": "Sample NPM Package",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "release": "pnpm run build && changeset publish",
+    "lint": "tsc",
+    "docs": "jsdoc -c jsdoc.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Softysolutions/sample-npm-package.git"
@@ -18,7 +26,11 @@
     "url": "https://github.com/Softysolutions/sample-npm-package/issues"
   },
   "homepage": "https://github.com/Softysolutions/sample-npm-package#readme",
-  "directories": {
-    "test": "test"
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "docdash": "^2.0.2",
+    "jsdoc": "^4.0.3",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
   }
 }

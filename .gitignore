@@ -1,18 +1,3 @@
-# Exclude development files
-.git
-.github/
-.gitignore
-
-.changeset/
-
-docs/
-tests/
-examples/
-
-Dockerfile
-
-
-#### Copied .gitignore
 # Logs
 logs
 *.log
@@ -26,8 +11,8 @@ build/Release
 # Dependency directories
 node_modules/
 
-# Typescript
-tsconfig.json
+# generate output
+dist
 
 # TypeScript cache
 *.tsbuildinfo
