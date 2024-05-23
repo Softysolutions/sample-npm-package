@@ -1,9 +1,18 @@
+import { Hello } from "./hello"
 /**
- * Adds two numbers together.
- * @param {number} a - The first number to add.
- * @param {number} b - The second number to add.
- * @returns {number} The sum of the two numbers.
+ * This is a function.
+ *
+ * @param {string} n - A string param
+ * @param {string} [o] - A optional string param
+ * @param {string} [d=DefaultValue] - A optional string param
+ * @return {string} A good string
+ *
+ * @example
+ *
+ *     foo('hello')
  */
-function add(a: number, b: number): number {
-  return a + b;
+
+export function foo(n: string, o: string, d: string): string {
+  Hello("World!");
+  return n
 }

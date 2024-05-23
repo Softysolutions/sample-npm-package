@@ -8,6 +8,8 @@ npm-debug.log*
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+sample-npm-package.github.io
+
 # Dependency directories
 node_modules/
 
