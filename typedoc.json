@@ -1,0 +1,13 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/**/*.ts"],
+  "out": "sample-npm-package.github.io",
+  "exclude": ["**/*.test.ts"],
+  "readme": "README.md",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "excludePrivate": true,
+  "excludeExternals": true,
+  "plugin": ["typedoc-material-theme"],
+  "themeColor": "#87CEEB",
+}
