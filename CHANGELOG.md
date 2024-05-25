@@ -1,5 +1,11 @@
 # rahuldhole-sample-npm-package
 
+## 2.1.7
+
+### Patch Changes
+
+- 8c701dd: test
+
 ## 2.1.6
 
 ### Patch Changes
