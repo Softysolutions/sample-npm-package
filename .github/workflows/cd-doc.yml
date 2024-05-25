@@ -1,13 +1,13 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Typedoc CI
+name: CDDoc
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [CD]
+    branches: [main]
+    types: [completed]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -19,7 +19,8 @@ permissions:
 
 jobs:
   typedoc-build:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # when workflows: [CD] is success
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +31,6 @@ jobs:
         with:
           node-version: 21.7.3
           cache: "pnpm"
-
-      - name: List files
-        run: ls -la
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
