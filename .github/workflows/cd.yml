@@ -39,15 +39,3 @@ jobs:
           # GITHUB_TOKEN is for changeset action
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Check if latest release
-        id: check_tag
-        run: echo "::set-output name=latest::$(pnpm info . dist-tags.latest)"
-
-      - name: Tag the release if latest
-        if: ${{ steps.check_tag.outputs.latest == github.sha }}
-        run: |
-          git tag -a release-latest -m "Release latest"
-          git push origin release-latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
