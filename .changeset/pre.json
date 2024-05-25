@@ -4,5 +4,7 @@
   "initialVersions": {
     "rahuldhole-sample-npm-package": "2.1.4"
   },
-  "changesets": []
+  "changesets": [
+    "cuddly-mangos-shout"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "rahuldhole-sample-npm-package",
   "description": "rahuldhole-sample-npm-package",
-  "version": "2.1.4",
+  "version": "2.1.5-beta.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
