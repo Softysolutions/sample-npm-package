@@ -1,0 +1,4 @@
+{
+  "installCommand": "docs",
+  "buildCommand": false
+}
