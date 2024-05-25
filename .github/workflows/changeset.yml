@@ -1,9 +1,11 @@
-name: CD
+name: Changeset
 on:
   workflow_run:
     workflows: [CI]
     branches: [main]
     types: [completed]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -12,7 +14,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  publish:
+  changeset:
     # when workflows: [CI] is success
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
@@ -25,17 +27,14 @@ jobs:
         with:
           node-version: 21.7.3
           cache: "pnpm"
-
+      
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      # when missed changesets in staging
-      - name: Create Release Pull Request or Publish
+      
+      - name: Create Changeset
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm run release
+          publish: false
         env:
-          # GITHUB_TOKEN is for changeset action
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

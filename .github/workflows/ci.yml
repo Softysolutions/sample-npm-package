@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - "*" # Match all branches
-      - "!main" # Exclude the main branch
-
 jobs:
   build:
     runs-on: ubuntu-latest
