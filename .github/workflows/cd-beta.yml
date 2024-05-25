@@ -1,11 +1,9 @@
-name: Changeset
+name: CD Beta
 on:
   workflow_run:
     workflows: [CI]
     branches: [staging]
     types: [completed]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -14,8 +12,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  changeset:
-    # when workflows: [CI] is success
+  publish-beta:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
@@ -27,14 +24,15 @@ jobs:
         with:
           node-version: 21.7.3
           cache: "pnpm"
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
-      - name: Create Changeset
+
+      - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: false
+          publish: pnpm run release --tag beta
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
