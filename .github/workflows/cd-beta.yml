@@ -1,4 +1,5 @@
 name: CD Beta
+
 on:
   workflow_run:
     workflows: [CI]
@@ -17,9 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: staging  # Ensure checkout is on the staging branch
+          
       - uses: pnpm/action-setup@v4
         with:
           version: 9.1.2
+
       - uses: actions/setup-node@v4
         with:
           node-version: 21.7.3
