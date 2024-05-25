@@ -1,5 +1,11 @@
 # rahuldhole-sample-npm-package
 
+## 2.1.6
+
+### Patch Changes
+
+- e0311bb: test
+
 ## 2.1.5
 
 ### Patch Changes
