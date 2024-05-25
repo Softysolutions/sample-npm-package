@@ -1,5 +1,11 @@
 # rahuldhole-sample-npm-package
 
+## 2.1.5-beta.0
+
+### Patch Changes
+
+- 784c7e5: test beta
+
 ## 2.1.4
 
 ### Patch Changes
