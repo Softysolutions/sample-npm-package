@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+  # TODO: Uncomment and remove push event
   # workflow_run:
   #   workflows: [CI]
   #   branches: [main]
@@ -21,7 +22,8 @@ permissions:
 jobs:
   publish:
     # when workflows: [CI] is success
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # TODO: Uncomment
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       published: ${{ steps.set-published.outputs.published }}
