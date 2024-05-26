@@ -57,13 +57,13 @@ jobs:
           path: ./sample-npm-package.github.io
 
   docs-deploy:
-    needs: publish
-    if: ${{ needs.publish.outputs.published == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: publish
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        if: ${{ needs.publish.outputs.published == 'true' }}
