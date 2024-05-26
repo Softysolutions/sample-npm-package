@@ -4,35 +4,25 @@ on:
   push:
     branches:
       - main
-
 jobs:
-  job1:
-    runs-on: ubuntu-latest
+  output-set:
+    runs-on: [ ubuntu-latest ]
     outputs:
-      condition: ${{ steps.set-condition.outputs.condition }}
-    steps:
-      - name: Set condition variable
-        id: set-condition
+      test-output1: ${{ steps.output.outputs.out1 }}
+      test-output2: ${{ steps.output.outputs.out2 }}
+    steps:          
+      - name: Set output
+        id: output
         run: |
-          echo " name=condition::true" # Set to 'true' to run job2 or 'false' to skip job2
-          echo "Condition set to true"
-
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
-    if: ${{ needs.job1.outputs.condition == 'true' }}
+          echo "out1=Your output1" >> $GITHUB_OUTPUT
+          echo "out2=Your output2" >> $GITHUB_OUTPUT
+          
+  print:
+    needs: output-set
+    runs-on: [ ubuntu-latest ]
     steps:
-      - name: Run if condition is true
+      - name: Echo output
         run: |
-          echo "Job 2 ran because the condition is true"
-          echo "Condition value in Job 2: ${{ needs.job1.outputs.condition }}"
-
-  job3:
-    runs-on: ubuntu-latest
-    needs: job1
-    if: ${{ needs.job1.outputs.condition != 'true' }}
-    steps:
-      - name: Skip if condition is false
-        run: |
-          echo "Job 3 skipped because the condition is false"
-          echo "Condition value in Job 3: ${{ needs.job1.outputs.condition }}"
+          echo "== output =="
+          echo "${{needs.output-set.outputs.test-output1}}"
+          echo "${{needs.output-set.outputs.test-output2}}"
