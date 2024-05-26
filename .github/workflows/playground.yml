@@ -10,12 +10,15 @@ jobs:
     outputs:
       test-output1: ${{ steps.output.outputs.out1 }}
       test-output2: ${{ steps.output.outputs.out2 }}
+      test-output3: ${{ steps.output.outputs.out3 }}
+
     steps:          
       - name: Set output
         id: output
         run: |
           echo "out1=Your output1" >> $GITHUB_OUTPUT
           echo "out2=Your output2" >> $GITHUB_OUTPUT
+          echo "out3=true" >> $GITHUB_OUTPUT
           
   print:
     needs: output-set
@@ -26,3 +29,28 @@ jobs:
           echo "== output =="
           echo "${{needs.output-set.outputs.test-output1}}"
           echo "${{needs.output-set.outputs.test-output2}}"
+          echo "${{needs.output-set.outputs.test-output3}}"
+
+  job1:
+    needs: output-set
+    if: ${{ needs.output-set.outputs.test-output3 == 'true' }}
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Echo output
+        run: |
+          echo "== output =="
+          echo "${{needs.output-set.outputs.test-output1}}"
+          echo "${{needs.output-set.outputs.test-output2}}"
+          echo "${{needs.output-set.outputs.test-output3}}"
+
+  job2:
+    needs: output-set
+    if: ${{ needs.output-set.outputs.test-output3 != 'true' }}
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Echo output
+        run: |
+          echo "== output =="
+          echo "${{needs.output-set.outputs.test-output1}}"
+          echo "${{needs.output-set.outputs.test-output2}}"
+          echo "${{needs.output-set.outputs.test-output3}}"
