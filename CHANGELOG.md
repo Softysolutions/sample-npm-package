@@ -1,5 +1,18 @@
 # rahuldhole-sample-npm-package
 
+## 2.2.0
+
+### Minor Changes
+
+- 92a7011: test
+
+### Patch Changes
+
+- 88d8809: test
+- 0725e0b: test
+- 7e0e0d0: test
+- 88d8809: test
+
 ## 2.1.12
 
 ### Patch Changes
