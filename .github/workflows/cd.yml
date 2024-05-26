@@ -64,7 +64,7 @@ jobs:
           path: ./sample-npm-package.github.io
 
   docs-deploy:
-    if: ${{ env.published == 'true' }}
+    if: ${{ publish.published == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
