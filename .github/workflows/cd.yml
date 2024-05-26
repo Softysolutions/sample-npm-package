@@ -20,6 +20,8 @@ jobs:
     # when workflows: [CI] is success
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.set-published.outputs.published }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -43,20 +45,26 @@ jobs:
           # GITHUB_TOKEN is for changeset action
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+
+      # Set output for whether the release was published
+      - name: Set published output
+        id: set-published
+        run: echo "published=${{ steps.changesets.outputs.published }}" >> $GITHUB_ENV
+
       # Generate docs only for full releases
       - name: Generate docs
-        if: ${{ steps.changesets.outputs.published == 'true' }}
-        run: pnpm run docs
+        if: ${{ steps.set-published.outputs.published == 'true' }}
+        run: npx typedoc
 
       # Upload artifact only if docs were generated
       - name: Upload artifact
-        if: ${{ steps.changesets.outputs.published == 'true' }}
+        if: ${{ steps.set-published.outputs.published == 'true' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./sample-npm-package.github.io
 
   docs-deploy:
+    if: ${{ env.published == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -66,4 +74,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        if: ${{ needs.publish.outputs.published == 'true' }}
