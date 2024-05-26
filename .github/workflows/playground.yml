@@ -1,9 +1,8 @@
 name: Conditional Job Execution
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
 jobs:
   output-set:
     runs-on: [ ubuntu-latest ]
