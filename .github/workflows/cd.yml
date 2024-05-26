@@ -11,71 +11,89 @@ on:
   #   types: [completed]
   workflow_dispatch:
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+# concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-  pages: write
-  id-token: write
+# permissions:
+#   contents: write
+#   pull-requests: write
+#   pages: write
+#   id-token: write
+
+# jobs:
+#   publish:
+#     # when workflows: [CI] is success
+#     # TODO: Uncomment
+#     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#     runs-on: ubuntu-latest
+#     outputs:
+#       published: ${{ steps.set-published.outputs.published }}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: pnpm/action-setup@v4
+#         with:
+#           version: 9.1.2
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 21.7.3
+#           cache: "pnpm"
+
+#       - name: Install dependencies
+#         run: pnpm install --frozen-lockfile
+
+#       # when missed changesets in staging
+#       - name: Create Release Pull Request or Publish
+#         id: changesets
+#         uses: changesets/action@v1
+#         with:
+#           publish: pnpm run release
+#         env:
+#           # GITHUB_TOKEN is for changeset action
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+#       # Set output for whether the release was published
+#       - name: Set published output
+#         id: set-published
+#         run: echo "published=${{ steps.changesets.outputs.published }}" >> $GITHUB_ENV
+
+#       # Generate docs only for full releases
+#       - name: Generate docs
+#         if: ${{ steps.set-published.outputs.published == 'true' }}
+#         run: npx typedoc
+
+#       # Upload artifact only if docs were generated
+#       - name: Upload artifact
+#         if: ${{ steps.set-published.outputs.published == 'true' }}
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           path: ./sample-npm-package.github.io
+
+#   docs-deploy:
+#     needs: publish
+#     if: ${{ needs.publish.outputs.published == 'true' }}
+#     environment:
+#       name: github-pages
+#       url: ${{ steps.deployment.outputs.page_url }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Deploy to GitHub Pages
+#         id: deployment
+#         uses: actions/deploy-pages@v4
+
 
 jobs:
-  publish:
-    # when workflows: [CI] is success
-    # TODO: Uncomment
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  job1:
     runs-on: ubuntu-latest
     outputs:
-      published: ${{ steps.set-published.outputs.published }}
+      my_variable: ${{ steps.set_variable.outputs.my_variable }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9.1.2
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 21.7.3
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # when missed changesets in staging
-      - name: Create Release Pull Request or Publish
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: pnpm run release
-        env:
-          # GITHUB_TOKEN is for changeset action
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # Set output for whether the release was published
-      - name: Set published output
-        id: set-published
-        run: echo "published=${{ steps.changesets.outputs.published }}" >> $GITHUB_ENV
-
-      # Generate docs only for full releases
-      - name: Generate docs
-        if: ${{ steps.set-published.outputs.published == 'true' }}
-        run: npx typedoc
-
-      # Upload artifact only if docs were generated
-      - name: Upload artifact
-        if: ${{ steps.set-published.outputs.published == 'true' }}
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./sample-npm-package.github.io
-
-  docs-deploy:
-    needs: publish
-    if: ${{ needs.publish.outputs.published == 'true' }}
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      - name: Set Variable
+        id: set_variable
+        run: echo "::set-output name=my_variable::Hello from job1"
+  
+  job2:
+    needs: job1
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Use Variable
+        run: echo "Variable from job1: ${{ needs.job1.outputs.my_variable }}"
