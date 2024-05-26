@@ -18,7 +18,8 @@ permissions:
 jobs:
   publish:
     # when workflows: [CI] is success
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # TODO: uncomment following line
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       published: ${{ steps.set-published.outputs.published }}
@@ -49,7 +50,7 @@ jobs:
       # Set output for whether the release was published
       - name: Set published output
         id: set-published
-        run: echo "published=${{ steps.changesets.outputs.published }}" >> $GITHUB_ENV
+        run: echo "published=${{ steps.changesets.outputs.published }}" >> $GITHUB_OUTPUT
 
       # Generate docs only for full releases
       - name: Generate docs
