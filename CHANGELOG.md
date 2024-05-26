@@ -1,5 +1,11 @@
 # rahuldhole-sample-npm-package
 
+## 2.1.11
+
+### Patch Changes
+
+- 1994d40: test
+
 ## 2.1.10
 
 ### Patch Changes
