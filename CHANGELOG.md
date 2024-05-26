@@ -1,5 +1,11 @@
 # rahuldhole-sample-npm-package
 
+## 2.1.9
+
+### Patch Changes
+
+- bc503a2: tes
+
 ## 2.1.8
 
 ### Patch Changes
