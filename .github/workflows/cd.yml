@@ -1,15 +1,19 @@
 name: CD
+
 on:
   workflow_run:
     workflows: [CI]
     branches: [main]
     types: [completed]
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   contents: write
   pull-requests: write
+  pages: write
+  id-token: write
 
 jobs:
   publish:
@@ -39,3 +43,27 @@ jobs:
           # GITHUB_TOKEN is for changeset action
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      # Generate docs only for full releases
+      - name: Generate docs
+        if: ${{ steps.changesets.outputs.published == 'true' }}
+        run: pnpm run docs
+
+      # Upload artifact only if docs were generated
+      - name: Upload artifact
+        if: ${{ steps.changesets.outputs.published == 'true' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./sample-npm-package.github.io
+
+  docs-deploy:
+    needs: publish
+    if: ${{ needs.publish.outputs.published == 'true' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
